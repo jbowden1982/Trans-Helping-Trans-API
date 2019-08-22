@@ -1,0 +1,61 @@
+type Query {
+    info: String!
+    rooms(orderBy: String): [Room!]!
+    room(roomId: ID!, orderBy: String) : Room!
+    users: [User!]!
+    currentUser: User!
+    messages(roomId: ID, orderBy: String) : [Message!]!
+}
+
+type Mutation {
+    postMessage(text: String!, roomId: ID!) : Message!
+    createRoom(name: String!, description: String!) : Room!
+    signup(username: String! email: String!, password: String!, name: String!): AuthPayload
+    login(username: String!, password: String!): AuthPayload
+}
+
+type Subscription {
+    newRoom: Room,
+    messages(roomId: ID!) : Message!
+}
+
+type Room {
+    id: ID!
+    name: String!
+    description: String
+    createdBy: User!
+    members: [User!]!
+    messages(orderBy: String) : [Message!]!
+}
+
+type Message {
+    id: ID!
+    room: Room!
+    owner: User!
+    text: String!
+}
+
+type AuthPayload {
+    token: String
+    user: User
+}
+
+type User {
+    id: ID!
+    username: String!
+    name: String!
+    password: String!
+    email: String!
+    rooms: [Room!]!
+}
+
+enum MessageOrderByInput {
+    id_ASC
+    id_DESC
+    text_ASC
+    text_DESC
+    createdAt_ASC
+    createdAt_DESC
+    updatedAt_ASC
+    updatedAt_DESC
+}

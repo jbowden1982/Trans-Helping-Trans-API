@@ -1,0 +1,31 @@
+
+type Room {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  description: String
+  members: [User!]! @relation(name: "MembersRelation", link: INLINE)
+  createdBy: User! @relation(name: "UserRelation", link: INLINE)
+  messages: [Message!]! @relation(name: "MessagesRelation")
+}
+
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  username: String! @unique
+  name: String!
+  password: String!
+  email: String! @unique
+
+}
+
+type Message {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  owner: User! @relation(name: "MessageOwnerRelation" link: INLINE)
+  text: String!
+  room: Room! @relation(name: "MessagesRelation" link: INLINE)
+}
