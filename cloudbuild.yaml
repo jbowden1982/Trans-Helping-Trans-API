@@ -1,5 +1,5 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--no-cache', '--tag=gcr.io/$PROJECT_ID/$REPO_NAME:latest', '--tag=gcr.io/$PROJECT_ID/$REPO_NAME:$TAG_NAME', '--tag=gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
+    args: ['build', '--no-cache', '--tag=gcr.io/$PROJECT_ID/$REPO_NAME:latest', '.']
 
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME']
