@@ -1,6 +1,6 @@
 FROM node:10
 
-EXPOSE 4000 4466
+EXPOSE 4000
 
 COPY . /var/www/
 WORKDIR /var/www/
