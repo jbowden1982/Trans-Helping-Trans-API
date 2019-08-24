@@ -12,7 +12,7 @@ async function postMessage(parent, args, context, info) {
 
   const message = await context.prisma.createMessage({
     text,
-    owner: { connect: { id: userId }},
+    user: { connect: { id: userId }},
     room: { connect: { id: roomId }}
   })
 

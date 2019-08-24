@@ -2,10 +2,10 @@ function room(parent, args, context) {
   return context.prisma.message({ id: parent.id }).room();;
 }
 
-function owner(parent, args, context) {
-  return context.prisma.message({ id: parent.id }).owner();;
+function user(parent, args, context) {
+  return context.prisma.message({ id: parent.id }).user();;
 }
 module.exports = {
-  owner,
+  user,
   room
 };

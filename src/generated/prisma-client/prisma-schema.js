@@ -27,7 +27,7 @@ type Message {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  owner: User!
+  user: User!
   text: String!
   room: Room!
 }
@@ -40,7 +40,7 @@ type MessageConnection {
 
 input MessageCreateInput {
   id: ID
-  owner: UserCreateOneInput!
+  user: UserCreateOneInput!
   text: String!
   room: RoomCreateOneWithoutMessagesInput!
 }
@@ -52,7 +52,7 @@ input MessageCreateManyWithoutRoomInput {
 
 input MessageCreateWithoutRoomInput {
   id: ID
-  owner: UserCreateOneInput!
+  user: UserCreateOneInput!
   text: String!
 }
 
@@ -146,7 +146,7 @@ input MessageSubscriptionWhereInput {
 }
 
 input MessageUpdateInput {
-  owner: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredInput
   text: String
   room: RoomUpdateOneRequiredWithoutMessagesInput
 }
@@ -177,7 +177,7 @@ input MessageUpdateManyWithWhereNestedInput {
 }
 
 input MessageUpdateWithoutRoomDataInput {
-  owner: UserUpdateOneRequiredInput
+  user: UserUpdateOneRequiredInput
   text: String
 }
 
@@ -223,7 +223,7 @@ input MessageWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  owner: UserWhereInput
+  user: UserWhereInput
   text: String
   text_not: String
   text_in: [String!]
@@ -318,9 +318,14 @@ input RoomCreateInput {
   id: ID
   name: String!
   description: String
-  members: UserCreateManyInput
+  members: UserCreateManyWithoutRoomsInput
   createdBy: UserCreateOneInput!
   messages: MessageCreateManyWithoutRoomInput
+}
+
+input RoomCreateManyWithoutMembersInput {
+  create: [RoomCreateWithoutMembersInput!]
+  connect: [RoomWhereUniqueInput!]
 }
 
 input RoomCreateOneWithoutMessagesInput {
@@ -328,11 +333,19 @@ input RoomCreateOneWithoutMessagesInput {
   connect: RoomWhereUniqueInput
 }
 
+input RoomCreateWithoutMembersInput {
+  id: ID
+  name: String!
+  description: String
+  createdBy: UserCreateOneInput!
+  messages: MessageCreateManyWithoutRoomInput
+}
+
 input RoomCreateWithoutMessagesInput {
   id: ID
   name: String!
   description: String
-  members: UserCreateManyInput
+  members: UserCreateManyWithoutRoomsInput
   createdBy: UserCreateOneInput!
 }
 
@@ -362,6 +375,70 @@ type RoomPreviousValues {
   description: String
 }
 
+input RoomScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  AND: [RoomScalarWhereInput!]
+  OR: [RoomScalarWhereInput!]
+  NOT: [RoomScalarWhereInput!]
+}
+
 type RoomSubscriptionPayload {
   mutation: MutationType!
   node: Room
@@ -381,14 +458,36 @@ input RoomSubscriptionWhereInput {
 input RoomUpdateInput {
   name: String
   description: String
-  members: UserUpdateManyInput
+  members: UserUpdateManyWithoutRoomsInput
   createdBy: UserUpdateOneRequiredInput
   messages: MessageUpdateManyWithoutRoomInput
+}
+
+input RoomUpdateManyDataInput {
+  name: String
+  description: String
 }
 
 input RoomUpdateManyMutationInput {
   name: String
   description: String
+}
+
+input RoomUpdateManyWithoutMembersInput {
+  create: [RoomCreateWithoutMembersInput!]
+  delete: [RoomWhereUniqueInput!]
+  connect: [RoomWhereUniqueInput!]
+  set: [RoomWhereUniqueInput!]
+  disconnect: [RoomWhereUniqueInput!]
+  update: [RoomUpdateWithWhereUniqueWithoutMembersInput!]
+  upsert: [RoomUpsertWithWhereUniqueWithoutMembersInput!]
+  deleteMany: [RoomScalarWhereInput!]
+  updateMany: [RoomUpdateManyWithWhereNestedInput!]
+}
+
+input RoomUpdateManyWithWhereNestedInput {
+  where: RoomScalarWhereInput!
+  data: RoomUpdateManyDataInput!
 }
 
 input RoomUpdateOneRequiredWithoutMessagesInput {
@@ -398,16 +497,34 @@ input RoomUpdateOneRequiredWithoutMessagesInput {
   connect: RoomWhereUniqueInput
 }
 
+input RoomUpdateWithoutMembersDataInput {
+  name: String
+  description: String
+  createdBy: UserUpdateOneRequiredInput
+  messages: MessageUpdateManyWithoutRoomInput
+}
+
 input RoomUpdateWithoutMessagesDataInput {
   name: String
   description: String
-  members: UserUpdateManyInput
+  members: UserUpdateManyWithoutRoomsInput
   createdBy: UserUpdateOneRequiredInput
+}
+
+input RoomUpdateWithWhereUniqueWithoutMembersInput {
+  where: RoomWhereUniqueInput!
+  data: RoomUpdateWithoutMembersDataInput!
 }
 
 input RoomUpsertWithoutMessagesInput {
   update: RoomUpdateWithoutMessagesDataInput!
   create: RoomCreateWithoutMessagesInput!
+}
+
+input RoomUpsertWithWhereUniqueWithoutMembersInput {
+  where: RoomWhereUniqueInput!
+  update: RoomUpdateWithoutMembersDataInput!
+  create: RoomCreateWithoutMembersInput!
 }
 
 input RoomWhereInput {
@@ -493,6 +610,7 @@ type User {
   name: String!
   password: String!
   email: String!
+  rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
 }
 
 type UserConnection {
@@ -507,16 +625,25 @@ input UserCreateInput {
   name: String!
   password: String!
   email: String!
+  rooms: RoomCreateManyWithoutMembersInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
+input UserCreateManyWithoutRoomsInput {
+  create: [UserCreateWithoutRoomsInput!]
   connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutRoomsInput {
+  id: ID
+  username: String!
+  name: String!
+  password: String!
+  email: String!
 }
 
 type UserEdge {
@@ -664,6 +791,7 @@ input UserUpdateDataInput {
   name: String
   password: String
   email: String
+  rooms: RoomUpdateManyWithoutMembersInput
 }
 
 input UserUpdateInput {
@@ -671,6 +799,7 @@ input UserUpdateInput {
   name: String
   password: String
   email: String
+  rooms: RoomUpdateManyWithoutMembersInput
 }
 
 input UserUpdateManyDataInput {
@@ -680,23 +809,23 @@ input UserUpdateManyDataInput {
   email: String
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyMutationInput {
   username: String
   name: String
   password: String
   email: String
+}
+
+input UserUpdateManyWithoutRoomsInput {
+  create: [UserCreateWithoutRoomsInput!]
+  delete: [UserWhereUniqueInput!]
+  connect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutRoomsInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutRoomsInput!]
+  deleteMany: [UserScalarWhereInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
 }
 
 input UserUpdateManyWithWhereNestedInput {
@@ -711,9 +840,16 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
+input UserUpdateWithoutRoomsDataInput {
+  username: String
+  name: String
+  password: String
+  email: String
+}
+
+input UserUpdateWithWhereUniqueWithoutRoomsInput {
   where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+  data: UserUpdateWithoutRoomsDataInput!
 }
 
 input UserUpsertNestedInput {
@@ -721,10 +857,10 @@ input UserUpsertNestedInput {
   create: UserCreateInput!
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
+input UserUpsertWithWhereUniqueWithoutRoomsInput {
   where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+  update: UserUpdateWithoutRoomsDataInput!
+  create: UserCreateWithoutRoomsInput!
 }
 
 input UserWhereInput {
@@ -814,6 +950,7 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
+  rooms_some: RoomWhereInput
   AND: [UserWhereInput!]
 }
 

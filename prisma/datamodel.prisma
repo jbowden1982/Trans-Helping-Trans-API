@@ -18,14 +18,14 @@ type User {
   name: String!
   password: String!
   email: String! @unique
-
+  rooms: [Room!]! @relation(name: "MembersRelation")
 }
 
 type Message {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  owner: User! @relation(name: "MessageOwnerRelation" link: INLINE)
+  user: User! @relation(name: "MessageUserRelation" link: INLINE)
   text: String!
   room: Room! @relation(name: "MessagesRelation" link: INLINE)
 }
