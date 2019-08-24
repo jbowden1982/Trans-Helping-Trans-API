@@ -8,8 +8,7 @@ WORKDIR /var/www/
 RUN cd /var/www  && \
  npm install -g yarn && \
  yarn && \
- yarn global add prisma && \
- yarn deploy
+ yarn global add prisma;
 
 CMD yarn deploy:prod && \
     yarn start
