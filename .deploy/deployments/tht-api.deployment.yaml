@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tht-api
-          image: gcr.io/shining-fire-5514/github-pangeamart-api:v2.0.1-8
+          image: gcr.io/trans-helping-trans/github.com/jbowden1982/trans-helping-trans-api:latest
           env:
             - name: NODE_ENV
               value: production
@@ -48,10 +48,6 @@ spec:
     - port: 4000
       name: http
       targetPort: 4000
-      protocol: TCP
-    - port: 4466
-      name: http
-      targetPort: 4466
       protocol: TCP
   selector:
     name: tht-api
