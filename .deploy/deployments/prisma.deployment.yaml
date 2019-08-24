@@ -1,0 +1,64 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prisma
+  namespace: tht
+  labels:
+    stage: production
+    name: prisma
+    app: prisma
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        stage: production
+        name: prisma
+        app: prisma
+    spec:
+      containers:
+        - name: prisma
+          image: 'prismagraphql/prisma:1.29'
+          ports:
+            - name: prisma-4466
+              containerPort: 4466
+          env:
+            - name: PRISMA_CONFIG
+              valueFrom:
+                configMapKeyRef:
+                  name: prisma-configmap
+                  key: PRISMA_CONFIG
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prisma-configmap
+  namespace: tht
+  labels:
+    stage: production
+    name: prisma
+    app: prisma
+data:
+  PRISMA_CONFIG: |
+    port: 4466
+    databases:
+      default:
+        connector: mongo
+        uri: mongodb://root:PUfjmKv1Pa@mongodb
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: prisma
+  namespace: tht
+spec:
+  ports:
+    - port: 4466
+      targetPort: 4466
+      protocol: TCP
+  selector:
+    stage: production
+    name: prisma
+    app: prisma
+

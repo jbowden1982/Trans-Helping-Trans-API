@@ -6,6 +6,10 @@ COPY . /var/www/
 WORKDIR /var/www/
 
 RUN cd /var/www  && \
- yarn
+ npm install -g yarn && \
+ yarn && \
+ yarn global add prisma && \
+ yarn deploy
 
-CMD yarn start
+CMD yarn deploy && \
+    yarn start
