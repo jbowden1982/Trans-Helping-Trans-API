@@ -13,7 +13,8 @@
   "scripts": {
     "start": "node ./src/app.js",
     "nodemon": "nodemon ./src/app.js",
-    "deploy": "prisma deploy",
+    "deploy": "prisma deploy -e .env",
+    "deploy:prod": "prisma deploy -e .env.prod",
     "up": "docker-compose up -d",
     "down": "docker-compose down"
   }

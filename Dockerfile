@@ -11,5 +11,5 @@ RUN cd /var/www  && \
  yarn global add prisma && \
  yarn deploy
 
-CMD yarn deploy && \
+CMD yarn deploy:prod && \
     yarn start
