@@ -6,7 +6,6 @@ COPY . /var/www/
 WORKDIR /var/www/
 
 RUN cd /var/www  && \
- yarn && \
- yarn start
+ yarn
 
-CMD npm run deploy
+CMD yarn start
