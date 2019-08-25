@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node ./src/app.js",
     "nodemon": "nodemon ./src/app.js",
-    "deploy": "prisma deploy -e .env -p prisma/prisma.yml",
-    "deploy:prod": "prisma deploy -e .env.prod -p prisma/prisma.yml",
+    "deploy": "PRISMA_URI=localhost prisma deploy -p prisma/prisma.yml",
+    "deploy:prod": "PRISMA_URI=mongodb.tht.svc.cluster.local prisma deploy -p prisma/prisma.yml",
     "up": "docker-compose up -d",
     "down": "docker-compose down"
   }
