@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: tht-api
-          image: gcr.io/trans-helping-trans/github.com/jbowden1982/trans-helping-trans-api:89497e9
+          image: gcr.io/trans-helping-trans/github.com/jbowden1982/trans-helping-trans-api:d70115e
           env:
             - name: NODE_ENV
               value: production
