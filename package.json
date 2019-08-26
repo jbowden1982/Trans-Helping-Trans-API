@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node ./src/app.js",
     "nodemon": "nodemon ./src/app.js",
-    "deploy": "PRISMA_URI=localhost prisma deploy -p prisma/prisma.yml",
-    "deploy:prod": "PRISMA_URI=prisma prisma deploy -p prisma/prisma.yml",
+    "deploy": "prisma deploy -p prisma/prisma.yml",
+    "deploy:prod": "prisma deploy -p prisma/prisma.prod.yml",
     "up": "docker-compose up -d",
     "down": "docker-compose down"
   }
