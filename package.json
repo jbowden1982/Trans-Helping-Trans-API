@@ -15,6 +15,7 @@
     "nodemon": "nodemon ./src/app.js",
     "deploy": "prisma deploy -p prisma/prisma.yml",
     "deploy:prod": "prisma deploy -p prisma/prisma.prod.yml",
+    "generate:prod": "prisma generate -p prisma/prisma.prod.yml",
     "up": "docker-compose up -d",
     "down": "docker-compose down"
   }

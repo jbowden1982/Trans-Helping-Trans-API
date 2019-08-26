@@ -12,4 +12,5 @@ RUN cd /var/www  && \
 
 CMD cd /var/www && \
     yarn deploy:prod && \
+    yarn generate:prod && \
     yarn start
