@@ -3,6 +3,26 @@ const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 const { Expo } = require('expo-server-sdk');
 
+
+async function joinRoom(parent, args, context) {
+  const userId = getUserId(context);
+
+  const {
+    roomId
+  } = args;
+
+  const room = context.prisma.updateRoom({
+    data: {
+      members: {connect: [{id: userId}]}
+    },
+    where: {
+      id: roomId
+    }
+  });
+
+  return room;
+}
+
 async function postMessage(parent, args, context, info) {
   const userId = getUserId(context);
 
@@ -17,6 +37,7 @@ async function postMessage(parent, args, context, info) {
     room: { connect: { id: roomId }}
   })
 
+  const room = await context.prisma.room({id: roomId});
   const members = await context.prisma.room({id: roomId}).members();
 
 
@@ -31,7 +52,10 @@ async function postMessage(parent, args, context, info) {
         messages.push({
           to: token,
           sound: 'default',
-          body: text
+          body:  room.name + ': ' + text,
+          data: {
+            roomId: room.id
+          }
         })
       } else {
         console.error(`Push token ${pushToken} is not a valid Expo push token`);
@@ -137,6 +161,7 @@ async function pushToken(parent, args, context) {
 }
 
 module.exports = {
+  joinRoom,
   createRoom,
   postMessage,
   pushToken,
