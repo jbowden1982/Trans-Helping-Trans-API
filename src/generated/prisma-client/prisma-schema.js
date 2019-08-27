@@ -611,6 +611,7 @@ type User {
   password: String!
   email: String!
   rooms(where: RoomWhereInput, orderBy: RoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Room!]
+  pushTokens: [String!]!
 }
 
 type UserConnection {
@@ -626,6 +627,7 @@ input UserCreateInput {
   password: String!
   email: String!
   rooms: RoomCreateManyWithoutMembersInput
+  pushTokens: UserCreatepushTokensInput
 }
 
 input UserCreateManyWithoutRoomsInput {
@@ -638,12 +640,17 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreatepushTokensInput {
+  set: [String!]
+}
+
 input UserCreateWithoutRoomsInput {
   id: ID
   username: String!
   name: String!
   password: String!
   email: String!
+  pushTokens: UserCreatepushTokensInput
 }
 
 type UserEdge {
@@ -676,6 +683,7 @@ type UserPreviousValues {
   name: String!
   password: String!
   email: String!
+  pushTokens: [String!]!
 }
 
 input UserScalarWhereInput {
@@ -792,6 +800,7 @@ input UserUpdateDataInput {
   password: String
   email: String
   rooms: RoomUpdateManyWithoutMembersInput
+  pushTokens: UserUpdatepushTokensInput
 }
 
 input UserUpdateInput {
@@ -800,6 +809,7 @@ input UserUpdateInput {
   password: String
   email: String
   rooms: RoomUpdateManyWithoutMembersInput
+  pushTokens: UserUpdatepushTokensInput
 }
 
 input UserUpdateManyDataInput {
@@ -807,6 +817,7 @@ input UserUpdateManyDataInput {
   name: String
   password: String
   email: String
+  pushTokens: UserUpdatepushTokensInput
 }
 
 input UserUpdateManyMutationInput {
@@ -814,6 +825,7 @@ input UserUpdateManyMutationInput {
   name: String
   password: String
   email: String
+  pushTokens: UserUpdatepushTokensInput
 }
 
 input UserUpdateManyWithoutRoomsInput {
@@ -840,11 +852,16 @@ input UserUpdateOneRequiredInput {
   connect: UserWhereUniqueInput
 }
 
+input UserUpdatepushTokensInput {
+  set: [String!]
+}
+
 input UserUpdateWithoutRoomsDataInput {
   username: String
   name: String
   password: String
   email: String
+  pushTokens: UserUpdatepushTokensInput
 }
 
 input UserUpdateWithWhereUniqueWithoutRoomsInput {

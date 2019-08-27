@@ -446,6 +446,7 @@ export interface UserCreateWithoutRoomsInput {
   name: String;
   password: String;
   email: String;
+  pushTokens?: Maybe<UserCreatepushTokensInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -453,6 +454,7 @@ export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   password?: Maybe<String>;
   email?: Maybe<String>;
+  pushTokens?: Maybe<UserUpdatepushTokensInput>;
 }
 
 export interface MessageUpdateInput {
@@ -483,6 +485,7 @@ export interface UserUpdateDataInput {
   password?: Maybe<String>;
   email?: Maybe<String>;
   rooms?: Maybe<RoomUpdateManyWithoutMembersInput>;
+  pushTokens?: Maybe<UserUpdatepushTokensInput>;
 }
 
 export interface MessageUpdateManyMutationInput {
@@ -626,6 +629,7 @@ export interface UserUpdateWithoutRoomsDataInput {
   name?: Maybe<String>;
   password?: Maybe<String>;
   email?: Maybe<String>;
+  pushTokens?: Maybe<UserUpdatepushTokensInput>;
 }
 
 export interface MessageCreateManyWithoutRoomInput {
@@ -640,13 +644,8 @@ export interface UserUpdateWithWhereUniqueWithoutRoomsInput {
   data: UserUpdateWithoutRoomsDataInput;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+export interface UserCreatepushTokensInput {
+  set?: Maybe<String[] | String>;
 }
 
 export interface MessageUpsertWithWhereUniqueWithoutRoomInput {
@@ -655,12 +654,13 @@ export interface MessageUpsertWithWhereUniqueWithoutRoomInput {
   create: MessageCreateWithoutRoomInput;
 }
 
-export interface UserUpdateInput {
-  username?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-  rooms?: Maybe<RoomUpdateManyWithoutMembersInput>;
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<MessageWhereInput>;
+  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
 }
 
 export interface MessageScalarWhereInput {
@@ -713,13 +713,12 @@ export interface MessageScalarWhereInput {
   NOT?: Maybe<MessageScalarWhereInput[] | MessageScalarWhereInput>;
 }
 
-export interface RoomCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
+export interface RoomUpdateInput {
+  name?: Maybe<String>;
   description?: Maybe<String>;
-  members?: Maybe<UserCreateManyWithoutRoomsInput>;
-  createdBy: UserCreateOneInput;
-  messages?: Maybe<MessageCreateManyWithoutRoomInput>;
+  members?: Maybe<UserUpdateManyWithoutRoomsInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredInput>;
+  messages?: Maybe<MessageUpdateManyWithoutRoomInput>;
 }
 
 export interface MessageUpdateManyWithWhereNestedInput {
@@ -727,143 +726,13 @@ export interface MessageUpdateManyWithWhereNestedInput {
   data: MessageUpdateManyDataInput;
 }
 
-export interface UserUpdateManyDataInput {
-  username?: Maybe<String>;
-  name?: Maybe<String>;
-  password?: Maybe<String>;
-  email?: Maybe<String>;
-}
-
-export interface MessageUpdateManyDataInput {
-  text?: Maybe<String>;
-}
-
-export interface MessageCreateInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneInput;
-  text: String;
-  room: RoomCreateOneWithoutMessagesInput;
-}
-
-export interface RoomUpsertWithWhereUniqueWithoutMembersInput {
-  where: RoomWhereUniqueInput;
-  update: RoomUpdateWithoutMembersDataInput;
-  create: RoomCreateWithoutMembersInput;
-}
-
-export interface RoomCreateWithoutMembersInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  description?: Maybe<String>;
-  createdBy: UserCreateOneInput;
-  messages?: Maybe<MessageCreateManyWithoutRoomInput>;
-}
-
-export interface RoomScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  AND?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
-  OR?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
-  NOT?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
-}
-
-export interface MessageSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<MessageWhereInput>;
-  AND?: Maybe<MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput>;
-}
-
-export interface RoomUpdateManyWithWhereNestedInput {
-  where: RoomScalarWhereInput;
-  data: RoomUpdateManyDataInput;
-}
-
 export interface RoomUpsertWithoutMessagesInput {
   update: RoomUpdateWithoutMessagesDataInput;
   create: RoomCreateWithoutMessagesInput;
 }
 
-export interface RoomUpdateWithoutMessagesDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  members?: Maybe<UserUpdateManyWithoutRoomsInput>;
-  createdBy?: Maybe<UserUpdateOneRequiredInput>;
-}
-
-export interface RoomUpdateOneRequiredWithoutMessagesInput {
-  create?: Maybe<RoomCreateWithoutMessagesInput>;
-  update?: Maybe<RoomUpdateWithoutMessagesDataInput>;
-  upsert?: Maybe<RoomUpsertWithoutMessagesInput>;
-  connect?: Maybe<RoomWhereUniqueInput>;
-}
-
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
-}
-
-export interface RoomUpdateManyDataInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
+export interface MessageUpdateManyDataInput {
+  text?: Maybe<String>;
 }
 
 export interface UserScalarWhereInput {
@@ -958,18 +827,10 @@ export interface UserScalarWhereInput {
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
 }
 
-export interface RoomUpdateInput {
-  name?: Maybe<String>;
-  description?: Maybe<String>;
-  members?: Maybe<UserUpdateManyWithoutRoomsInput>;
-  createdBy?: Maybe<UserUpdateOneRequiredInput>;
-  messages?: Maybe<MessageUpdateManyWithoutRoomInput>;
-}
-
-export interface MessageCreateWithoutRoomInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneInput;
-  text: String;
+export interface RoomUpsertWithWhereUniqueWithoutMembersInput {
+  where: RoomWhereUniqueInput;
+  update: RoomUpdateWithoutMembersDataInput;
+  create: RoomCreateWithoutMembersInput;
 }
 
 export interface UserCreateInput {
@@ -979,6 +840,160 @@ export interface UserCreateInput {
   password: String;
   email: String;
   rooms?: Maybe<RoomCreateManyWithoutMembersInput>;
+  pushTokens?: Maybe<UserCreatepushTokensInput>;
+}
+
+export interface RoomScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
+  OR?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
+  NOT?: Maybe<RoomScalarWhereInput[] | RoomScalarWhereInput>;
+}
+
+export interface MessageCreateWithoutRoomInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneInput;
+  text: String;
+}
+
+export interface RoomUpdateManyWithWhereNestedInput {
+  where: RoomScalarWhereInput;
+  data: RoomUpdateManyDataInput;
+}
+
+export interface UserUpdateInput {
+  username?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  rooms?: Maybe<RoomUpdateManyWithoutMembersInput>;
+  pushTokens?: Maybe<UserUpdatepushTokensInput>;
+}
+
+export interface RoomUpdateManyDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+}
+
+export interface UserUpdateManyDataInput {
+  username?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  email?: Maybe<String>;
+  pushTokens?: Maybe<UserUpdatepushTokensInput>;
+}
+
+export interface RoomUpdateWithoutMessagesDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  members?: Maybe<UserUpdateManyWithoutRoomsInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface RoomUpdateOneRequiredWithoutMessagesInput {
+  create?: Maybe<RoomCreateWithoutMessagesInput>;
+  update?: Maybe<RoomUpdateWithoutMessagesDataInput>;
+  upsert?: Maybe<RoomUpsertWithoutMessagesInput>;
+  connect?: Maybe<RoomWhereUniqueInput>;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface UserUpdatepushTokensInput {
+  set?: Maybe<String[] | String>;
+}
+
+export interface MessageCreateInput {
+  id?: Maybe<ID_Input>;
+  user: UserCreateOneInput;
+  text: String;
+  room: RoomCreateOneWithoutMessagesInput;
+}
+
+export interface RoomCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  members?: Maybe<UserCreateManyWithoutRoomsInput>;
+  createdBy: UserCreateOneInput;
+  messages?: Maybe<MessageCreateManyWithoutRoomInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface RoomCreateWithoutMembersInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description?: Maybe<String>;
+  createdBy: UserCreateOneInput;
+  messages?: Maybe<MessageCreateManyWithoutRoomInput>;
 }
 
 export interface NodeNode {
@@ -993,6 +1008,7 @@ export interface UserPreviousValues {
   name: String;
   password: String;
   email: String;
+  pushTokens: String[];
 }
 
 export interface UserPreviousValuesPromise
@@ -1005,6 +1021,7 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
+  pushTokens: () => Promise<String[]>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1017,6 +1034,7 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
+  pushTokens: () => Promise<AsyncIterator<String[]>>;
 }
 
 export interface MessageEdge {
@@ -1137,6 +1155,7 @@ export interface User {
   name: String;
   password: String;
   email: String;
+  pushTokens: String[];
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1156,6 +1175,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  pushTokens: () => Promise<String[]>;
 }
 
 export interface UserSubscription
@@ -1177,6 +1197,7 @@ export interface UserSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  pushTokens: () => Promise<AsyncIterator<String[]>>;
 }
 
 export interface UserNullablePromise
@@ -1198,6 +1219,7 @@ export interface UserNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  pushTokens: () => Promise<String[]>;
 }
 
 export interface RoomSubscriptionPayload {

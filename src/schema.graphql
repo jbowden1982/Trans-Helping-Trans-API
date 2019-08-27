@@ -12,6 +12,7 @@ type Mutation {
     createRoom(name: String!, description: String!) : Room!
     signup(username: String! email: String!, password: String!, name: String!): AuthPayload
     login(username: String!, password: String!): AuthPayload
+    pushToken(token: String!): User!
 }
 
 type Subscription {
@@ -40,6 +41,10 @@ type AuthPayload {
     user: User
 }
 
+type SuccessPayload {
+    success: Boolean
+}
+
 type User {
     id: ID!
     username: String!
@@ -47,6 +52,7 @@ type User {
     password: String!
     email: String!
     rooms: [Room!]!
+    pushTokens: [String!]!
 }
 
 enum MessageOrderByInput {
