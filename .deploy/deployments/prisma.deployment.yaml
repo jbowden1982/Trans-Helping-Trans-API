@@ -44,7 +44,7 @@ data:
     databases:
       default:
         connector: mongo
-        uri: mongodb://root:PUfjmKv1Pa@mongodb
+        uri: mongodb://root:DGDqh73pnr@mongodb
 ---
 
 apiVersion: v1
