@@ -42,6 +42,8 @@ metadata:
     service: tht-api
     env: production
     role: loadbalancer
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: transhelpingtrans.xyz.
 spec:
   type: LoadBalancer
   ports:

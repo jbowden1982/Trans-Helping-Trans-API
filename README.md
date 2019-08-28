@@ -23,7 +23,7 @@ To connect to prisma server execute the following command while authenticated wi
     
 Then hit 
     
-    localhost:4467
+    http://localhost:4467
 
 To connect to the graphql playground execute the following command:
 
@@ -31,4 +31,12 @@ To connect to the graphql playground execute the following command:
     
 Then hit
 
-    localhost:4001
+    http://localhost:4001
+    
+To connect to weave scope execute the following command:
+
+    kubectl port-forward -n weave "$(kubectl get -n weave pod --selector=weave-scope-component=app -o jsonpath='{.items..metada.name}')" 4040
+    
+Then hit
+
+    http://localhost:4040
