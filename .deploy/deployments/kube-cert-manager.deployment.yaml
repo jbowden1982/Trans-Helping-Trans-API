@@ -1,0 +1,51 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: kube-cert-manager
+  name: kube-cert-manager
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kube-cert-manager
+      name: kube-cert-manager
+    spec:
+      containers:
+        - name: kube-cert-manager
+          image: gcr.io/trans-helping-trans/kube-cert-manager:latest
+          env:
+            - name: GCE_PROJECT
+              value: trans-helping-trans
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/lib/defaults/trans-helping-trans-f8a576970d49.json
+          args:
+            - "-data-dir=/var/lib/cert-manager"
+             "-acme-url=https://acme-staging.api.letsencrypt.org/directory"
+            # NOTE: the URL above points to the staging server, where you won't get real certs.
+            # Uncomment the line below to use the production LetsEncrypt server:
+#            - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
+            # You can run multiple instances of kube-cert-manager for the same namespace(s),
+            # each watching for a different value for the 'class' label
+            #- "-class=default"
+            # You can choose to monitor only some namespaces, otherwise all namespaces will be monitored
+            - "-namespaces=tht"
+            # If you set a default email, you can omit the field/annotation from Certificates/Ingresses
+            - "-default-email=aria.bowden@icloud.com"
+            # If you set a default provider, you can omit the field/annotation from Certificates/Ingresses
+            - "-default-provider=googlecloud"
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/cert-manager
+            - name: defaults
+              mountPath: /var/lib/defaults
+      volumes:
+        - name: data
+          gcePersistentDisk:
+            pdName: cert-manager
+            fsType: ext4
+        - name: defaults
+          secret:
+            secretName: gcloud-config
