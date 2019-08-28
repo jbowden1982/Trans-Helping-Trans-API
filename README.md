@@ -16,3 +16,19 @@ To connect to your database from outside the cluster execute the following comma
 
     kubectl port-forward --namespace tht svc/mongodb 27017:27017 &
     mongo --host 127.0.0.1 --authenticationDatabase admin -p $MONGODB_ROOT_PASSWORD
+
+To connect to prisma server execute the following command while authenticated with kubectl:
+
+    kubectl port-forward --nespace tht svc/prisma 4467:4466
+    
+Then hit 
+    
+    localhost:4467
+
+To connect to the graphql playground execute the following command:
+
+    kubectl port-forward --namespace tht svc/tht-api 4001:4000
+    
+Then hit
+
+    localhost:4001

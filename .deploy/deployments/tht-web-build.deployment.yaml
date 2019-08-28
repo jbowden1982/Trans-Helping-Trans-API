@@ -1,0 +1,53 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tht-web
+  namespace: tht
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: tht-web
+      name: tht-web
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        service: tht-web
+        name: tht-web
+    spec:
+      containers:
+        - name: tht-web
+          image: gcr.io/trans-helping-trans/github_jbowden1982_trans-helping-trans
+          env:
+            - name: NODE_ENV
+              value: production
+          ports:
+            - containerPort: 8080
+              name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tht-web
+  namespace: tht
+  labels:
+    name: tht-api
+    service: tht-api
+    env: production
+    role: loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: http
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    name: tht-web
