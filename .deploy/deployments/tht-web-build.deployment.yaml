@@ -51,5 +51,9 @@ spec:
       name: http
       targetPort: 8080
       protocol: TCP
+    - port: 443
+      name: https
+      targetPort: 8080
+      protocol: TCP
   selector:
     name: tht-web

@@ -13,6 +13,7 @@ spec:
         app: kube-cert-manager
       name: kube-cert-manager
     spec:
+      serviceAccount: "tiller"
       containers:
         - name: kube-cert-manager
           image: gcr.io/trans-helping-trans/kube-cert-manager:latest
@@ -20,13 +21,13 @@ spec:
             - name: GCE_PROJECT
               value: trans-helping-trans
             - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: /var/lib/defaults/trans-helping-trans-f8a576970d49.json
+              value: /var/lib/defaults/token
           args:
             - "-data-dir=/var/lib/cert-manager"
-             "-acme-url=https://acme-staging.api.letsencrypt.org/directory"
+            # - "-acme-url=https://acme-staging.api.letsencrypt.org/directory"
             # NOTE: the URL above points to the staging server, where you won't get real certs.
             # Uncomment the line below to use the production LetsEncrypt server:
-#            - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
+            - "-acme-url=https://acme-v01.api.letsencrypt.org/directory"
             # You can run multiple instances of kube-cert-manager for the same namespace(s),
             # each watching for a different value for the 'class' label
             #- "-class=default"
@@ -48,4 +49,4 @@ spec:
             fsType: ext4
         - name: defaults
           secret:
-            secretName: gcloud-config
+            secretName: gcloud-token

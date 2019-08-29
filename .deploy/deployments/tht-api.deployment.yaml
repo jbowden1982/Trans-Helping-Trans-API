@@ -48,7 +48,15 @@ spec:
   type: LoadBalancer
   ports:
     - port: 4000
+      name: http2
+      targetPort: 4000
+      protocol: TCP
+    - port: 80
       name: http
+      targetPort: 4000
+      protocol: TCP
+    - port: 443
+      name: https
       targetPort: 4000
       protocol: TCP
   selector:
